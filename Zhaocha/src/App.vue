@@ -11,28 +11,36 @@
         <div>3、每位客户有两次游戏机会，完成3个找茬关卡后可获得10元话费。</div>
       </div>
       <div class="start" v-on:click="startGame(beforeStartTime)" v-show="time != 0">开始游戏</div>
-
-      <!--开始倒计时-->
-      <transition-group name="fade">
-        <div class="vertical-center" v-if="isModal" :key="1">{{ beforeStartTime }}</div>
-        <div class="modal" v-if="isModal" :key="1"></div>
-      </transition-group>
     </div>
 
+    <!--倒计时-->
+    <transition-group name="fade">
+      <div class="vertical-center" v-if="isModal" :key="1">{{ beforeStartTime }}</div>
+      <div class="modal" v-if="isModal" :key="1"></div>
+    </transition-group>
+
     <div v-if="startState">
-      <!--<h3 v-if="time != endTime" v-bind:class="{ textOrange: time <= 30,textRed: time <= 10 }" class="textGreen">剩余时间:{{ time }}</h3>-->
       <div class="head-bg">
         <div v-if="time != endTime">
           <div class="lastTime">
             时间:{{ time }}
           </div>
-
           <div class="progress">
             找到:{{ currentCount }}/3
           </div>
         </div>
         <h3 class="reStart" v-if="time == endTime" v-on:click="reStart">重新开始</h3>
       </div>
+
+      <!--过关提示-->
+        <div v-show="alert" :key="1">
+          <div class="vertical-center alert">
+            <img class="gou" src="../src/assets/zhaocha/gou.png"/>
+            <div class="tips">{{ tips }}</div>
+            <div class="next" v-on:click="next">确定</div>
+          </div>
+          <div class="modal"></div>
+        </div>
 
       <transition-group name="fade">
         <div id="game1" class="game" v-if="progressStep == 0" :key="1">
@@ -97,7 +105,7 @@ export default {
   name: 'app',
   data () {
     return {
-        time: 10,//每局游戏时间
+        time: 60,//每局游戏时间
         endTime: 0,//结束时间
         startState: 0,//是否开启游戏
         isModal: false,//遮罩
@@ -108,8 +116,9 @@ export default {
         c1: false,
         c2: false,
         c3: false,
-        showStyle: false,
-        openid:''
+        alert: false,
+        openid:'',
+        tips:''//过关提示文字
     }
   },
   methods:{
@@ -139,7 +148,7 @@ export default {
       game: function (lastTime) {
           let self = this;
           //游戏结束
-          if (self.correctCount === 9) return
+          if (self.correctCount === 9 || self.currentCount === 3) return
           //每局游戏重置时间
           if (self.progressStep === 1 || self.progressStep === 2) self.time = 60;
           self.time = lastTime;
@@ -173,23 +182,29 @@ export default {
           self.correctCount++;
           self.currentCount++;
 
-          //下一个游戏
-          if (self.correctCount === 3 || self.correctCount === 6) {
-
-              setTimeout(function () {
-                  if (self.correctCount === 3) alert('恭喜你！你已完成关卡1的任务！请继续到关卡2');
-                  if (self.correctCount === 6) alert('恭喜你！你已完成关卡2的任务！请继续到关卡3');
-                  self.c1 = false;
-                  self.c2 = false;
-                  self.c3 = false;
-                  self.time = 60;
-                  self.currentCount = 0;
-                  self.progressStep = self.correctCount / 3;
-              }, 1000);
-          }else if (self.correctCount === 9 ) {
+          if (self.correctCount === 3) {
+              self.tips = '恭喜你！你已完成关卡1的任务！请继续到关卡2';
+              self.alert = true;
+          }
+          if (self.correctCount === 6) {
+              self.tips = '恭喜你！你已完成关卡2的任务！请继续到关卡3';
+              self.alert = true;
+          }
+          if (self.correctCount === 9 ) {
               //游戏成功
               self.submit('0');
           }
+      },
+      next: function () {
+          let self = this;
+          self.alert = false;
+          self.c1 = false;
+          self.c2 = false;
+          self.c3 = false;
+          self.time = 60;
+          self.currentCount = 0;
+          self.progressStep = self.correctCount / 3;
+          self.game(self.time);
       },
       //判断数组包含某个元素
       isContainObj: function (arr,value) {
@@ -277,8 +292,8 @@ export default {
   text-align: left;
   font-size: 17px;
   margin-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .start {
@@ -290,6 +305,7 @@ export default {
   line-height: 40px;
   margin: 0 auto;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .reStart {
@@ -378,6 +394,7 @@ export default {
   width: 50px;
   height: 50px;
   text-align: right;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
 .game{
@@ -394,6 +411,41 @@ export default {
 
 .textRed {
   color: red;
+}
+
+.alert {
+  width: 240px;
+  height: 240px;
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  font-size: 17px;
+  margin-left: -120px;
+}
+
+.gou {
+  margin-top: 15px;
+  width: 64px;
+  height: 64px;
+}
+
+.tips {
+  position: absolute;
+  padding: 15px 15px 15px 15px;
+  font-weight: 400;
+}
+
+.next {
+  height: 50px;
+  width: 100px;
+  position: absolute;
+  bottom: 15px;
+  line-height: 50px;
+  background-color: rgb(121,201,244);
+  color: white;
+  border-radius: 3px;
+  left: 50%;
+  margin-left: -50px;
 }
 
 #c1 {
