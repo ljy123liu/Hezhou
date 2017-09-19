@@ -16,7 +16,6 @@ module.exports = {
         options: {
           loaders: {
           }
-          // other vue-loader options go here
         }
       },
       {
@@ -24,17 +23,27 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/
       },
+      // {
+      //   test: /\.(png|jpg|gif|svg)$/,
+      //   loader: 'file-loader',
+      //   options: {
+      //     name: '[name].[ext]?[hash]'
+      //   }
+      // },
+      // {
+      //   test: /\.html$/,
+      //   loader: 'html-withimg-loader'
+      // },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       },
-        {
-            test: /\.html$/,
-            loader: 'html-withimg-loader'
-        }
+      {
+        test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]'
+      },
+      {
+        test: /\.png$/, loader: "file-loader?name=images/[hash:8].[name].[ext]"
+      }
     ]
   },
   resolve: {
@@ -54,7 +63,6 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
