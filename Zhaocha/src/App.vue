@@ -56,7 +56,7 @@
             </div>
           </div>
 
-          <div style="position: relative">
+          <div class="item-top">
             <img src="../src/assets/zhaocha/kw.jpg" style="width: 100%"/>
             <div class="c1" v-on:click="select(c1,$event)">
               <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
@@ -88,7 +88,7 @@
             </div>
           </div>
 
-          <div style="position: relative">
+          <div class="item-top">
             <img src="../src/assets/zhaocha/lw.jpg" style="width: 100%"/>
             <div class="c4" v-on:click="select(c1,$event)">
               <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
@@ -119,7 +119,7 @@
             </div>
           </div>
 
-          <div style="position: relative">
+          <div class="item-top">
             <img src="../src/assets/zhaocha/cw.jpg" style="width: 100%"/>
             <div class="c7" v-on:click="select(c1,$event)">
               <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
@@ -134,6 +134,17 @@
         </div>
       </transition-group>
 
+
+      <div v-if="end" :key="1">
+        <div class="endStyle">
+          <img v-on:click="closeWindow" class="close" src="../src/assets/zhaocha/close.png"/>
+          <img src="../src/assets/zhaocha/cr.jpg" style="width: 100%"/>
+          <div style="font-size: 17px;text-align: center;padding: 10px">到广西移动APP了解存话费送话费</div>
+          <div class="next" v-on:click="checkActivity">确定</div>
+        </div>
+        <div class="modal"></div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -146,7 +157,7 @@ export default {
     return {
         time: 60,//每局游戏时间
         endTime: 0,//结束时间
-        startState: 1,//是否开启游戏
+        startState: 0,//是否开启游戏
         isModal: false,//遮罩
         beforeStartTime: 3,//开始前提示时间
         progressStep: 0,//第几个游戏
@@ -157,7 +168,8 @@ export default {
         c3: false,
         alert: false,
         openid:'',
-        tips:''//过关提示文字
+        tips:'',//过关提示文字
+        end: false
     }
   },
   methods:{
@@ -245,6 +257,9 @@ export default {
           self.progressStep = self.correctCount / 3;
           self.game(self.time);
       },
+      checkActivity: function () {
+          window.location.href = 'http://gx.10086.cn/zt-portal/wap/promoaccept/tchy_dp12y_jsb/index?mobile=59460BA85C97D8D6D0462AEE1404E1D6&devid=33DA835366CC0C9D5B5730E5E049C841B2C72422177CBBFEDEB5BE7EBADC463B195B9F17342ED294&c=783&cc=null&login_name=&sharetime=CD49881602EDE663EA7C42D4BF3EA6A50510FC8FA5A41843&o_r=';
+      },
       //判断数组包含某个元素
       isContainObj: function (arr,value) {
           for (let i = 0; i < arr.length; i++) {
@@ -258,7 +273,7 @@ export default {
           duration = isNaN(duration) ? 3500 : duration;
           let m = document.createElement('div');
           m.innerHTML = msg;
-          m.style.cssText = "padding: 5px 10px 5px 10px;font-size:13px; width:70%; min-width:150px; background:#000; color:#fff; text-align:center; border-radius:5px; position:fixed; top:40%; left:15%; z-index:999999;";
+          m.style.cssText = "padding: 5px 10px 5px 10px;font-size:13px; width:70%; left:15%; background:#000; color:#fff; text-align:center; border-radius:5px; position:fixed; top:40%;  z-index:999999;";
           document.body.appendChild(m);
           setTimeout(function () {
               var d = 0.5;
@@ -290,6 +305,7 @@ export default {
                   'Content-Type': 'application/x-www-form-urlencoded',
               },
           }).then(function (response) {
+
               //请求数据
               if (response.status === 200) {
                   let data = response.data;
@@ -300,6 +316,10 @@ export default {
                       self.toast('恭喜你成功获得20元话费!');
                   }
               }
+
+              setTimeout(function () {
+                  self.end = true;
+              }, 3500);
           }).catch(function (error) {
               console.log(error);
           });
@@ -324,8 +344,8 @@ export default {
       }
   },
     created: function (){
-      console.log('start')
-
+//      console.log('start')
+//      this.toast('1234567890')
     }
 
 }
@@ -411,7 +431,12 @@ export default {
   width: 100%;
   height: 100px;
   background-size:cover;
-  margin-bottom: 5px;
+  /*margin-bottom: 5px;*/
+}
+
+.item-top {
+  position: relative;
+  margin-top: 15px;
 }
 
 .lastTime {
@@ -483,6 +508,25 @@ export default {
   border-radius: 3px;
   left: 50%;
   margin-left: -50px;
+}
+
+.endStyle {
+  position: fixed;
+  left: 10%;
+  top: 50%;
+  margin-top: -150px;
+  background-color: white;
+  width: 80%;
+  height: 300px;
+  z-index: 9999;
+}
+
+.close {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -10px;
+  right: -10px;
 }
 
 .c1 {
