@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <!--开始前-->
     <div v-if="!startState">
       <img class="image" src="../src/assets/zhaocha/head.jpg"/>
@@ -33,68 +32,108 @@
       </div>
 
       <!--过关提示-->
-        <div v-show="alert" :key="1">
-          <div class="vertical-center alert">
-            <img class="gou" src="../src/assets/zhaocha/gou.png"/>
-            <div class="tips">{{ tips }}</div>
-            <div class="next" v-on:click="next">确定</div>
-          </div>
-          <div class="modal"></div>
+      <div v-show="alert" :key="1">
+        <div class="vertical-center alert">
+          <img class="gou" src="../src/assets/zhaocha/gou.png"/>
+          <div class="tips">{{ tips }}</div>
+          <div class="next" v-on:click="next">确定</div>
         </div>
+        <div class="modal"></div>
+      </div>
 
       <transition-group name="fade">
         <div id="game1" class="game" v-if="progressStep == 0" :key="1">
-          <!--<div class="titlePadding">正确图</div>-->
-          <img class="image" src="../src/assets/zhaocha/kr.jpg"/>
-          <div class="titlePadding"></div>
-          <img class="image" src="../src/assets/zhaocha/kw.jpg"/>
-          <div id="c1" class="cycle" v-on:click="select(c1,$event)">
-            <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
+          <div style="position: relative">
+            <img src="../src/assets/zhaocha/kr.jpg" style="width: 100%"/>
+            <div class="c1" v-on:click="select(c1,$event)">
+              <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c2" v-on:click="select(c2,$event)">
+              <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c3" v-on:click="select(c3,$event)">
+              <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
+            </div>
           </div>
-          <div id="c2" class="cycle" v-on:click="select(c2,$event)">
-            <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
+
+          <div style="position: relative">
+            <img src="../src/assets/zhaocha/kw.jpg" style="width: 100%"/>
+            <div class="c1" v-on:click="select(c1,$event)">
+              <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c2" v-on:click="select(c2,$event)">
+              <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c3" v-on:click="select(c3,$event)">
+              <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
+            </div>
           </div>
-          <div id="c3" class="cycle" v-on:click="select(c3,$event)">
-            <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
+        </div>
+
+      </transition-group>
+
+      <transition-group name="fade">
+        <div id="game3" class="game" v-if="progressStep == 1" :key="1">
+
+          <div style="position: relative">
+            <img src="../src/assets/zhaocha/lr.jpg" style="width: 100%"/>
+            <div class="c4" v-on:click="select(c1,$event)">
+              <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c5" v-on:click="select(c2,$event)">
+              <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c6" v-on:click="select(c3,$event)">
+              <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+          </div>
+
+          <div style="position: relative">
+            <img src="../src/assets/zhaocha/lw.jpg" style="width: 100%"/>
+            <div class="c4" v-on:click="select(c1,$event)">
+              <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c5" v-on:click="select(c2,$event)">
+              <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c6" v-on:click="select(c3,$event)">
+              <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+          </div>
+        </div>
+
+      </transition-group>
+
+      <transition-group name="fade">
+        <div id="game2" class="game" v-if="progressStep == 2" :key="1">
+          <div style="position: relative">
+            <img src="../src/assets/zhaocha/cr.jpg" style="width: 100%"/>
+            <div class="c7" v-on:click="select(c1,$event)">
+              <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c8" v-on:click="select(c2,$event)">
+              <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c9" v-on:click="select(c3,$event)">
+              <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+          </div>
+
+          <div style="position: relative">
+            <img src="../src/assets/zhaocha/cw.jpg" style="width: 100%"/>
+            <div class="c7" v-on:click="select(c1,$event)">
+              <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c8" v-on:click="select(c2,$event)">
+              <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
+            </div>
+            <div class="c9" v-on:click="select(c3,$event)">
+              <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
+            </div>
           </div>
         </div>
       </transition-group>
 
-      <transition-group name="fade">
-        <div id="game2" class="game" v-if="progressStep == 1" :key="1">
-          <!--<div class="titlePadding">正确图</div>-->
-          <img class="image" src="../src/assets/zhaocha/cr.jpg"/>
-          <div class="titlePadding"></div>
-          <img class="image" src="../src/assets/zhaocha/cw.jpg"/>
-          <div id="c4" class="cycle" v-on:click="select(c1,$event)">
-            <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
-          </div>
-          <div id="c5" class="cycle" v-on:click="select(c2,$event)">
-            <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
-          </div>
-          <div id="c6" class="cycle" v-on:click="select(c3,$event)">
-            <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
-          </div>
-        </div>
-      </transition-group>
-
-      <transition-group name="fade">
-        <div id="game3" class="game" v-if="progressStep == 2" :key="1">
-          <!--<div class="titlePadding">正确图</div>-->
-          <img class="image" src="../src/assets/zhaocha/lr.jpg"/>
-          <div class="titlePadding"></div>
-          <img class="image" src="../src/assets/zhaocha/lw.jpg"/>
-          <div id="c7" class="cycle" v-on:click="select(c1,$event)">
-            <img v-if="c1" src="../src/assets/zhaocha/correct.png"/>
-          </div>
-          <div id="c8" class="cycle" v-on:click="select(c2,$event)">
-            <img v-if="c2" src="../src/assets/zhaocha/correct.png"/>
-          </div>
-          <div id="c9" class="cycle" v-on:click="select(c3,$event)">
-            <img v-if="c3" src="../src/assets/zhaocha/correct.png"/>
-          </div>
-        </div>
-      </transition-group>
     </div>
   </div>
 </template>
@@ -107,7 +146,7 @@ export default {
     return {
         time: 60,//每局游戏时间
         endTime: 0,//结束时间
-        startState: 0,//是否开启游戏
+        startState: 1,//是否开启游戏
         isModal: false,//遮罩
         beforeStartTime: 3,//开始前提示时间
         progressStep: 0,//第几个游戏
@@ -165,18 +204,18 @@ export default {
       },
       //选对
       select: function (state,event) {
-
+//          console.log(event);
           let self = this;
           if (state || self.time === self.endTime || self.correctCount === 9) return;
 
           let arr1 = ['c1','c4','c7'];
           let arr2 = ['c2','c5','c8'];
           let arr3 = ['c3','c6','c9'];
-          if (self.isContainObj(arr1,event.target.id)) {
+          if (self.isContainObj(arr1,event.target.className)) {
               self.c1 = true;
-          }else if (self.isContainObj(arr2,event.target.id)) {
+          }else if (self.isContainObj(arr2,event.target.className)) {
               self.c2 = true;
-          }else if (self.isContainObj(arr3,event.target.id)) {
+          }else if (self.isContainObj(arr3,event.target.className)) {
               self.c3 = true;
           }
           self.correctCount++;
@@ -265,7 +304,24 @@ export default {
               console.log(error);
           });
       },
-
+      isWeixn: function () {
+          var ua = navigator.userAgent.toLowerCase();
+          if (ua.match(/MicroMessenger/i) == "micromessenger") {
+              return true;
+          } else {
+              return false;
+          }
+      },
+      closeWindow: function () {
+          let self = this;
+          if (self.isWeixn()) {
+              WeixinJSBridge.call('closeWindow');
+          }else {
+              window.opener=null;
+              window.open('','_self');
+              window.close();
+          }
+      }
   },
     created: function (){
       console.log('start')
@@ -386,31 +442,12 @@ export default {
   background-position:center;
 }
 
-.titlePadding {
-  padding: 10px 0 10px 0;
-}
-
-.cycle {
-  width: 50px;
-  height: 50px;
-  text-align: right;
-  -webkit-tap-highlight-color:rgba(0,0,0,0);
-}
-
 .game{
   position: relative;
 }
 
 .textGreen {
   color: #62b900;
-}
-
-.textOrange {
-  color: orange;
-}
-
-.textRed {
-  color: red;
 }
 
 .alert {
@@ -448,89 +485,135 @@ export default {
   margin-left: -50px;
 }
 
-#c1 {
+.c1 {
   position: absolute;
   top: 8%;
   left: 35%;
   height: 60px;
   width: 80px;
   text-align: right;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  /*background-color: yellow;*/
 }
 
-#c2 {
+.c1 img {
   position: absolute;
-  top: 20%;
+  bottom: -25px;
+  right: -5px;
+}
+
+.c2 {
+  position: absolute;
+  top: 45%;
   right: 25%;
+  /*background-color: yellow;*/
+  width: 50px;
+  height: 50px;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
-#c2 img {
+.c2 img {
   position: absolute;
   bottom: -25px;
   right: -20px;
 }
 
-#c3 {
+.c3 {
   position: absolute;
-  top: 20%;
+  top: 45%;
   right: 5%;
+  /*background-color: yellow;*/
+  width: 50px;
+  height: 50px;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
-#c3 img {
+.c3 img {
   position: absolute;
   bottom: -25px;
   right: -20px;
 }
 
-#c4 {
-  position: absolute;
-  top: 22%;
-  right: 38%;
-  width: 80px;
-  /*background-color: yellow;*/
-}
-
-#c4 img {
-  position: absolute;
-  bottom: -20px;
-  right: -20px;
-}
-
-
-#c5 {
-  position: absolute;
-  top: 32%;
-  left: 30%;
-}
-
-#c6 {
-  position: absolute;
-  top: 32%;
-  right: 30%;
-  /*background-color: yellow;*/
-}
-
-#c7 {
-  position: absolute;
-  top: 12%;
-  left: 10%;
-  width: 120px;
-}
-
-#c8 {
-  position: absolute;
-  top: 20%;
-  left: 10%;
-  width: 120px;
-  height: 40px;
-}
-
-#c9 {
+.c4 {
   position: absolute;
   top: 30%;
   left: 10%;
-  width: 150px;
+  width: 120px;
   height: 40px;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.c4 img {
+  position: absolute;
+  bottom: -10px;
+  right: -20px;
+}
+
+
+.c5 {
+  position: absolute;
+  top: 48%;
+  left: 15%;
+  width: 100px;
+  height: 40px;
+  text-align: right;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  /*background-color: yellow;*/
+}
+
+.c5 img {
+  position: absolute;
+  bottom: 0px;
+  right: -30px;
+}
+
+.c6 {
+  position: absolute;
+  top: 65%;
+  left: 10%;
+  width: 120px;
+  height: 40px;
+  text-align: right;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.c7 {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  width: 120px;
+  height: 50px;
+  /*background-color: yellow;*/
+  text-align: right;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.c7 img {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.c8 {
+  position: absolute;
+  top: 70%;
+  left: 20%;
+  width: 100px;
+  height: 40px;
+  /*background-color: yellow;*/
+  text-align: right;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.c9 {
+  position: absolute;
+  top: 70%;
+  left: 55%;
+  width: 100px;
+  height: 40px;
+  /*background-color: yellow;*/
   text-align: center;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
 .fade-enter-active, .fade-leave-active {

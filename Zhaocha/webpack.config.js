@@ -48,7 +48,8 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map'//开发阶段使用它
+    // devtool: '#eval-source-map'//开发阶段使用它
+    devtool: false
 }
 
 if (process.env.NODE_ENV === 'production') {
