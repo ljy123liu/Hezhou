@@ -24,15 +24,11 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]?[hash]'
-                }
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
             },
             {
-                test: /\.html$/,
-                loader: 'html-withimg-loader'
+                test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]'
             }
         ]
     },
