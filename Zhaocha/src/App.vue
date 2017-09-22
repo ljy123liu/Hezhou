@@ -140,7 +140,8 @@
           <div class="endStyle">
             <img v-on:click="closeWindow" class="close" src="../src/assets/zhaocha/close.png"/>
             <img src="../src/assets/zhaocha/cr.jpg" style="width: 100%"/>
-            <div style="font-size: 17px;text-align: center;padding: 10px">到广西移动APP了解存话费送话费</div>
+            <div style="font-size: 21px;text-align: center;padding: 10px">恭喜你成功获得10元话费!</div>
+            <div style="font-size: 17px;text-align: center;padding-left: 10px;padding-right: 10px">到广西移动APP了解存话费送话费</div>
             <div class="next" v-on:click="checkActivity">确定</div>
           </div>
         </div>
@@ -207,7 +208,7 @@
 
                 if (self.time === self.endTime) {
                     //游戏失败，时间到
-                    self.submit('-1');
+                    self.submit('0');
                 } else {
                     self.time -= 1;
                     setTimeout(function () {
@@ -244,7 +245,7 @@
                 }
                 if (self.correctCount === 9 ) {
                     //游戏成功
-                    self.submit('0');
+                    self.submit('1');
                 }
             },
             next: function () {
@@ -259,7 +260,7 @@
                 self.game(self.time);
             },
             checkActivity: function () {
-                window.location.href = 'http://gx.10086.cn/zt-portal/wap/promoaccept/tchy_dp12y_jsb/index?mobile=59460BA85C97D8D6D0462AEE1404E1D6&devid=33DA835366CC0C9D5B5730E5E049C841B2C72422177CBBFEDEB5BE7EBADC463B195B9F17342ED294&c=783&cc=null&login_name=&sharetime=CD49881602EDE663EA7C42D4BF3EA6A50510FC8FA5A41843&o_r=';
+                window.location.href = 'http://gx.10086.cn/zt-portal/wap/promoaccept/tchy_dp12y_jsb/index';
             },
             //判断数组包含某个元素
             isContainObj: function (arr,value) {
@@ -274,7 +275,7 @@
                 duration = isNaN(duration) ? 3500 : duration;
                 let m = document.createElement('div');
                 m.innerHTML = msg;
-                m.style.cssText = "padding: 5px 10px 5px 10px;font-size:13px; width:70%; left:15%; background:#000; color:#fff; text-align:center; border-radius:5px; position:fixed; top:40%;  z-index:999999;";
+                m.style.cssText = "padding: 10px 10px 10px 10px;font-size:17px; width:70%; left:15%; background-color: rgba(0, 0, 0, 0.6); color:#fff; text-align:center; border-radius:5px; position:fixed; top:40%;  z-index:999999;";
                 document.body.appendChild(m);
                 setTimeout(function () {
                     var d = 0.5;
@@ -310,17 +311,14 @@
                     //请求数据
                     if (response.status === 200) {
                         let data = response.data;
-                        console.log(data);
                         if (data.errcode === '-1') {
                             self.toast(data.errmsg);
                         }else if (data.errcode === '0'){
-                            self.toast('恭喜你成功获得20元话费!');
+                            self.end = true;
+                        }else if (data.errcode === '1001') {
+                            self.toast(data.errmsg);
                         }
                     }
-
-                    setTimeout(function () {
-                        self.end = true;
-                    }, 3500);
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -345,8 +343,6 @@
             }
         },
         created: function (){
-//      console.log('start')
-//      this.toast('1234567890')
         }
 
     }
@@ -521,7 +517,7 @@
     left: 50%;
     margin-left: -140px;
     width: 280px;
-    height: 300px;
+    height: 350px;
     z-index: 9999;
   }
 
